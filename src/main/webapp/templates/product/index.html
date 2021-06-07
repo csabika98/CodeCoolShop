@@ -38,19 +38,33 @@
 
 <div class="container">
     <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+        <strong th:if="${category}" th:text="${category.name}">Category Title</strong>
+        <strong th:if="${supplierList}" th:text="${currentSupplier}">Category Title</strong>
     </div>
-    <div class="card-text">
-        <p th:text="${categories}"></p>
+    <div class="row">
+        <div class="col text-center">
+            <form action="/">
+                <label for="category">Choose a category:</label>
+                <select name="category" id="category">
+                    <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}"
+                            th:text="${cat.name}"></option>
+                </select>
+                <button class="btn btn-primary" type="submit">Ok</button>
+            </form>
+        </div>
+        <div class="col text-center">
+            <form action="/">
+                <label for="supplier">Choose a supplier:</label>
+                <select name="supplier" id="supplier">
+                    <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.name.toLowerCase}"
+                            th:text="${supplier.name}"></option>
+                </select>
+                <button class="btn btn-primary" type="submit">Ok</button>
+            </form>
+        </div>
     </div>
-    <form action="/">
-        <select name="category">
-            <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}" th:text="${cat.name}"></option>
-        </select>
-        <button type="submit">Ok</button>
-    </form>
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="col col-sm-12 col-md-6 col-lg-4 py-3" th:each="prod,iterStat : ${products}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff"
                      th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
