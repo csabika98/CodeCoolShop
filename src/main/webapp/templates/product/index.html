@@ -40,9 +40,6 @@
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
-    <div class="card-text">
-        <p th:text="${categories}"></p>
-    </div>
     <form action="/">
         <select name="category">
             <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}" th:text="${cat.name}"></option>
