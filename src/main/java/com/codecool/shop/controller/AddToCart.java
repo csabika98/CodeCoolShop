@@ -35,8 +35,8 @@ public class AddToCart extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
-        productService.addProductToCart(productId);
+        ProductService productService = new ProductService();
+        productService.addProductToCart(userId, productId);
 
 
 

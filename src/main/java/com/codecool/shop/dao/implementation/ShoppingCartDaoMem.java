@@ -1,41 +1,37 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.model.LineItem;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ShoppingCart;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
-    private List<Product> products;
-    private List<LineItem> lineItems;
+
+    private Map<String, ShoppingCart> allshoppingCart = new LinkedHashMap<>();
+    private static ShoppingCartDaoMem instance = null;
 
     ShoppingCartDaoMem(){
+    }
 
+    public static ShoppingCartDaoMem getInstance() {
+        if (instance == null) {
+            instance = new ShoppingCartDaoMem();
+        }
+        return instance;
     }
 
     @Override
-    public List<Product> getProducts() {
-        return products;
+    public void addProduct(String userId, ShoppingCart shoppingCart) {
+        this.allshoppingCart.put(userId, shoppingCart);
     }
 
     @Override
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public ShoppingCart find(String userId) {
+        return allshoppingCart.get(userId);
     }
 
-    @Override
-    public List<LineItem> getLineItems() {
-        return lineItems;
-    }
 
-    @Override
-    public void addLineItem(LineItem lineItem) {
-        this.lineItems.add(lineItem);
-    }
 
-    @Override
-    public void removeLineItem(LineItem lineItem){
-        this.lineItems.remove(lineItem);
-    }
+
 }
