@@ -2,7 +2,9 @@ package com.codecool.shop.service;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -20,6 +22,7 @@ public class ProductService {
         this.productCategoryDao = productCategoryDao;
     }
 
+
     public ProductCategory getProductCategory(int categoryId) {
         return productCategoryDao.find(categoryId);
     }
@@ -36,5 +39,11 @@ public class ProductService {
     public List<Product> getSupplierDao(String supplier) {
         return productDao.getBy(supplier);
     }
-
+//    public Product getProductById(int productId){
+//        return productDao.find(productId);
+//    }
+    public void addProductToCart(int productId){
+        Product product = productDao.find(productId);;
+//        shoppingCartDao.addProduct(product);
+    }
 }
