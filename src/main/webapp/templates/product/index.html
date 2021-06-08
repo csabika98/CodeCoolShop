@@ -37,7 +37,7 @@
     <h1>Codecool Shop</h1>
 </div>
 <div class="container">
-    <div class="card">
+    <div class="card text-center">
         <strong th:if="${category}" th:text="${category.name}">Category Title</strong>
         <strong th:if="${supplierList}" th:text="${currentSupplier}">Category Title</strong>
     </div>
@@ -45,7 +45,7 @@
         <div class="col text-center">
             <form action="/">
                 <label for="category">Choose a category:</label>
-                <select name="category" id="category">
+                <select name="category" id="category" class="form-select" aria-label=".form-select-sm example">
                     <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}"
                             th:text="${cat.name}"></option>
                 </select>
@@ -55,7 +55,7 @@
         <div class="col text-center">
             <form action="/">
                 <label for="supplier">Choose a supplier:</label>
-                <select name="supplier" id="supplier">
+                <select name="supplier" id="supplier" class="form-select" aria-label=".form-select-sm example">
                     <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.name.toLowerCase}"
                             th:text="${supplier.name}"></option>
                 </select>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="col col-sm-12 col-md-6 col-lg-4 py-3" th:each="prod,iterStat : ${products}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff"
                      th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
