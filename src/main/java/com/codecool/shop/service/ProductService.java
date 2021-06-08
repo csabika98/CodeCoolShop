@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductService {
     private ProductDao productDao;
     private ProductCategoryDao productCategoryDao;
+    private List<ShoppingCartDao> shoppingCartList;
 
 
     public ProductService(ProductDao productDao, ProductCategoryDao productCategoryDao) {
