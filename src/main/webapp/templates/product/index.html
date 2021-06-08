@@ -26,58 +26,79 @@
 </head>
 
 <body>
-
-<div class="jumbotron text-center">
+<div class="text-center py-5 codecool">
     <h1>Codecool Shop</h1>
 </div>
-<div class="container-fluid">
-    <div class="card text-center pb-3">
-        <strong th:if="${category}" th:text="${category.name}">Category Title</strong>
-        <strong th:if="${supplierList}" th:text="${currentSupplier}">Category Title</strong>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <form action="/">
-                <label for="category">Choose a category:</label>
-                <select name="category" id="category" class="form-select" aria-label=".form-select-sm example">
-                    <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}"
-                            th:text="${cat.name}"></option>
-                </select>
-                <button class="btn btn-primary" type="submit">Ok</button>
-            </form>
-        </div>
-        <div class="col text-center">
-            <form action="/">
-                <label for="supplier">Choose a supplier:</label>
-                <select name="supplier" id="supplier" class="form-select" aria-label=".form-select-sm example">
-                    <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.name.toLowerCase}"
-                            th:text="${supplier.name}"></option>
-                </select>
-                <button class="btn btn-primary" type="submit">Ok</button>
-            </form>
+<nav class="navbar sticky-top navbar-light bg-light">
+    <div class="container-fluid d-flex justify-content-end">
+        <div class="btn-group dropstart">
+            <button type="button" class="badge rounded-pill bg-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropstart
+            </button>
+            <ul class="dropdown-menu text-center shopping-items">
+                <li>item</li>
+                <li>item</li>
+                <li>item</li>
+            </ul>
         </div>
     </div>
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4 py-3" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff"
-                     th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
+    </div>
+    </div>
+</nav>
+<div class="container-fluid bg-own px-3 py-3">
+    <div class="card shadow p-3 mb-5 bg-body rounded shopcard">
+        <div class="py-3">
+            <div class="text-center">
+                <strong th:if="${category}" th:text="${category.name}">Category Title</strong>
+                <strong th:if="${supplierList}" th:text="${currentSupplier}">Category Title</strong>
+            </div>
+        </div>
+        <div class="mx-3">
+            <div class="row">
+                <div class="col text-center">
+                    <form action="/">
+                        <label for="category">Choose a category:</label>
+                        <select name="category" id="category" class="form-select" aria-label=".form-select-sm example">
+                            <option th:each="cat,iterStat : ${categories}" th:value="${cat.name.toLowerCase}"
+                                    th:text="${cat.name}"></option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Ok</button>
+                    </form>
                 </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                    </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" th:href="@{/addnewcart(id=${prod.getId()})}">Add to cart</a>
+                <div class="col text-center">
+                    <form action="/">
+                        <label for="supplier">Choose a supplier:</label>
+                        <select name="supplier" id="supplier" class="form-select" aria-label=".form-select-sm example">
+                            <option th:each="supplier,iterStat : ${supplierList}"
+                                    th:value="${supplier.name.toLowerCase}"
+                                    th:text="${supplier.name}"></option>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Ok</button>
+                    </form>
+                </div>
+            </div>
+            <div id="products" class="row">
+                <div class="col col-sm-12 col-md-6 col-lg-4 py-3" th:each="prod,iterStat : ${products}">
+                    <div class="card">
+                        <img class="" src="http://placehold.it/400x250/000/fff"
+                             th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                        <div class="card-header">
+                            <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                            <p class="card-text" th:text="${prod.description}">Product description... </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            </div>
+                            <div class="card-text">
+                                <a class="btn btn-success" th:href="@{/addnewcart(id=${prod.getId()})}">Add to cart</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <div th:replace="footer.html :: copy"></div>
