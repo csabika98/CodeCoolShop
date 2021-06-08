@@ -3,15 +3,15 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.ShoppingCart;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
-    private Map<String, ShoppingCart> allshoppingCart = new LinkedHashMap<>();
+    private Map<String, ShoppingCart> allshoppingCart = new HashMap<>();
     private static ShoppingCartDaoMem instance = null;
 
-    ShoppingCartDaoMem(){
+    ShoppingCartDaoMem() {
     }
 
     public static ShoppingCartDaoMem getInstance() {
@@ -22,7 +22,7 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
-    public void addProduct(String userId, ShoppingCart shoppingCart) {
+    public void addShoppingCart(String userId, ShoppingCart shoppingCart) {
         this.allshoppingCart.put(userId, shoppingCart);
     }
 
@@ -31,7 +31,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
         return allshoppingCart.get(userId);
     }
 
-
-
-
+    @Override
+    public Map<String, ShoppingCart> getAll() {
+        return allshoppingCart;
+    }
 }

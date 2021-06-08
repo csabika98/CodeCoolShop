@@ -10,6 +10,11 @@ public class LineItem {
         quantity = 1;
         price = product.getDefaultPrice() * quantity;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
     public float getPrice() {
         return price;
     }
@@ -17,6 +22,7 @@ public class LineItem {
     public void setPrice(float price) {
         this.price = price;
     }
+
     public int getQuantity() {
         return quantity;
     }

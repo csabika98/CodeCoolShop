@@ -4,10 +4,22 @@ import java.util.List;
 
 public class ShoppingCart {
     private List<LineItem> lineItems;
+    private LineItem lineItem;
 
+    public ShoppingCart(Product product){
+        addProduct(product);
+    }
     public void addProduct(Product product) {
-        LineItem lineItem = new LineItem(product);
+        if (getLineItemByProduct(product) != null){
+            lineItem = new LineItem(product);
+        } else {
+            lineItem = getLineItemByProduct(product);
+        }
         this.lineItems.add(lineItem);
+    }
+
+    public LineItem getLineItemByProduct(Product product){
+        return lineItems.stream().filter(t -> t.getProduct() == product).findFirst().orElse(null);
     }
 
     public List<LineItem> getLineItems() {

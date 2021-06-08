@@ -3,14 +3,10 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.ShoppingCart;
-import com.codecool.shop.model.Supplier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
@@ -51,7 +47,13 @@ public class ProductService {
 
     public void addProductToCart(String userId, int productId){
         Product product = getProductById(productId);
-        ShoppingCart shoppingCart = shoppingCartDao.find(userId);
-        shoppingCartDao.addProduct(userId, shoppingCart);
+        ShoppingCart shoppingCart;
+        if (shoppingCartDao.getAll().containsKey(userId)){
+            shoppingCart = shoppingCartDao.find(userId);
+            shoppingCart.addProduct(product);
+        } else {
+            shoppingCart = new ShoppingCart(product);
+        }
+        shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
 }
