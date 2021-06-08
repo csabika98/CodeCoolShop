@@ -79,6 +79,6 @@
     font-weight: lighter;
     background-color: whitesmoke;
 }
-#shoppingcart{
-    position: absolute;
+.shopping-items{
+    padding: 15px;
 }
