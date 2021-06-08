@@ -1,6 +1,6 @@
 package com.codecool.shop.model;
 
-public class Address {
+public abstract class Address {
      private String country;
      private String city;
      private int zipcode;
@@ -14,4 +14,5 @@ public class Address {
          this.street = street;
          this.houseNumber = houseNumber;
      }
+
 }
