@@ -51,7 +51,10 @@
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary" type="button">CHECKOUT</button>
+        <form th:action="@{/checkout}" th:method="GET">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <br/>
+                <input type="submit" value="Checkout" class="btn btn-primary"/>
         <a href="/" class="btn btn-warning">Back to main page</a>
     </div>
     <div th:replace="footer.html :: copy"></div>
