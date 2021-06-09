@@ -32,6 +32,9 @@ public class ProductService {
         var category = productCategoryDao.find(categoryId);
         return productDao.getBy(category);
     }
+    public ShoppingCart getShoppingCartByUserId(String userID){
+        return shoppingCartDao.find(userID);
+    }
 
     public List<ProductCategory> getAllCategory() {
         return productCategoryDao.getAll();
