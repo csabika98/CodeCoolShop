@@ -13,6 +13,8 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -31,16 +33,22 @@ public class AddToCart extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder buffer = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-            buffer.append(System.lineSeparator());
+        String jsonString = new String();
+        String userID = req.getSession().getId();
+        try {
+            String line = "";
+            BufferedReader reader = req.getReader();
+            while ((line = reader.readLine()) != null)
+                jsonString += line;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        String data = buffer.toString();
-        System.out.println(data);
-
+        int productId = Integer.parseInt(jsonString);
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore,productCategoryDataStore,shoppingCartDao);
+        productService.addProductToCart(userID, productId);
     }
 
 }
