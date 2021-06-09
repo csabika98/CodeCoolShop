@@ -1,11 +1,13 @@
 package com.codecool.shop.model;
 
 public class LineItem {
-    private Product product;
+    private String productName;
+    private transient Product product;
     private int quantity;
     private float price;
 
     public LineItem(Product product){
+        this.productName = product.getName();
         this.product = product;
         quantity = 1;
         price = product.getDefaultPrice() * quantity;

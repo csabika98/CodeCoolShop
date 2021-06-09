@@ -41,6 +41,9 @@ public class Product extends BaseModel {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
     }
+    public String getName(){
+        return name;
+    }
 
     public ProductCategory getProductCategory() {
         return productCategory;
