@@ -1,9 +1,10 @@
 package com.codecool.shop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    private List<LineItem> lineItems;
+    private List<LineItem> lineItems = new ArrayList<>();
     private LineItem lineItem;
 
     public ShoppingCart(Product product){
