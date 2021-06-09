@@ -23,8 +23,8 @@ public class ShoppingCart {
         return lineItems.stream().filter(t -> t.getProduct() == product).findFirst().orElse(null);
     }
 
-    public List<LineItem> getLineItems() {
-        return lineItems;
+    public LineItem getLineItemsFirst() {
+        return lineItems.get(0);
     }
 
 
