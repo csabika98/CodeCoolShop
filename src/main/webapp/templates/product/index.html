@@ -33,13 +33,10 @@
     <div class="container-fluid d-flex justify-content-end">
         <div class="btn-group dropstart">
             <button type="button" class="badge rounded-pill bg-primary" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropstart
+                Cart
             </button>
-            <ul class="dropdown-menu text-center shopping-items">
-                <li>item</li>
-                <li>item</li>
-                <li>item</li>
-            </ul>
+            <div id="shopping-list" class="dropdown-menu text-center shopping-items w-auto p-3">
+            </div>
         </div>
     </div>
     </div>
@@ -91,7 +88,7 @@
                                 <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                             </div>
                             <div class="card-text">
-                                <a class="btn btn-success" th:href="@{/addtocart(productId=${prod.getId()})}">Add to cart</a>
+                                <a id="addButton" class="btn btn-success" th:href="@{/addtocart(productId=${prod.getId()})}">Add to cart</a>
                             </div>
                         </div>
                     </div>
