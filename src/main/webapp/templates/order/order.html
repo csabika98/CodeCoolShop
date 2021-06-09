@@ -28,9 +28,32 @@
 <body>
 <div class="text-center py-5 codecool">
     <h1>Codecool Shop</h1>
-</div>
-TEST PAGE FOR THE ORDERS!!!!4
-UNDER DEVELOPMENT!
-<div th:replace="footer.html :: copy"></div>
+    <div class="container">
+        <h1>Order Summary</h1>
+        <table class="table table-stripped">
+            <thead>
+            <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr th:each="prod : ${##}"> // FOR EACH FOR THE ITEMS-->
+                <td>Product name</td>
+                <td>Product quantity</td>
+                <td>Price</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total price</td>
+                <td>Sum of all products</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary" type="button">CHECKOUT</button>
+        <a href="/" class="btn btn-warning">Back to main page</a>
+    </div>
+    <div th:replace="footer.html :: copy"></div>
 </body>
 </html>
