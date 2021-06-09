@@ -29,20 +29,22 @@
 <div class="text-center py-5 codecool">
     <h1>Codecool Shop</h1>
 </div>
-<nav class="navbar sticky-top navbar-light bg-light">
+<nav class="sticky-top">
     <div class="container-fluid d-flex justify-content-end">
         <div class="btn-group dropstart">
             <button type="button" class="badge rounded-pill bg-primary" data-bs-toggle="dropdown" aria-expanded="false">
                 Cart
             </button>
-            <div id="shopping-list" class="dropdown-menu text-center shopping-items w-auto p-3">
-                <form th:action="@{/order}" th:method="GET">
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <br/>
-                        <input type="submit" value="Checkout & Order summary" class="btn btn-primary"/>
-                    </div>
-                </form>
-
+            <div class="dropdown-menu text-center shopping-items w-auto p-3">
+                <div id="shopping-list"></div>
+                <div>
+                    <form th:action="@{/order}" th:method="GET">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <br/>
+                            <input type="submit" value="Checkout & Order summary" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
