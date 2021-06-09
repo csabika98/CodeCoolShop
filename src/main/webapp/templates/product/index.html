@@ -39,7 +39,12 @@
                 <li>item</li>
                 <li>item</li>
                 <li>item</li>
-                <button type="button" class="btn btn-primary" th:href="@{/orders}" value="Checkout"</button>
+                <form th:action="@{/order}" th:method="GET">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <br/>
+                        <input type="submit" value="Checkout & Order summary" class="btn btn-primary"/>
+                    </div>
+                </form>
             </ul>
         </div>
     </div>
