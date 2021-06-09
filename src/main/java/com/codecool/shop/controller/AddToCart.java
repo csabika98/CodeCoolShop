@@ -37,6 +37,7 @@ public class AddToCart extends HttpServlet {
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
         ProductService service = new ProductService(productDataStore,productCategoryDataStore,shoppingCartDao);
         service.addProductToCart(userId, productId);
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 
 }
