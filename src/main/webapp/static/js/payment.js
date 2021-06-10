@@ -10,7 +10,7 @@ const initPayment = {
                 credit.style.visibility="hidden";
             }
         })
-        paypalRadio.addEventListener("change", function ( event){
+        creditRadio.addEventListener("change", function ( event){
             if (creditRadio.checked === true){
                 paypal.style.visibility="hidden";
                 credit.style.visibility="visible";
