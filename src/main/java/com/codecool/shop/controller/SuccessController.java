@@ -1,93 +1,117 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
+import com.codecool.shop.model.LineItem;
+import com.codecool.shop.model.Order;
+import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.User;
+import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.*;
+import javax.mail.internet.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.util.List;
 import java.util.Properties;
 
 @WebServlet(urlPatterns = {"/success"})
 public class SuccessController  extends HttpServlet {
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-//        WebContext context = new WebContext(req, resp, req.getServletContext());
-//        engine.process("payment/success.html", context, resp.getWriter());
-//    }
+
+    static Properties mailServerProperties;
+    static Session getMailSession;
+    static MimeMessage generateMailMessage;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String from = "cc.fourhorseman";
+        String pass = "Qawsed01";
 
-        // Recipient's email ID needs to be mentioned.
-        String to = "toge79@gmail.com";
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, shoppingCartDao);
 
-        // Sender's email ID needs to be mentioned
-        String from = "order@fourhorseman.com";
+        HttpSession userSession = request.getSession();
+        String userId = userSession.getId();
 
-        // Assuming you are sending email from localhost
-        String host = "localhost";
+        User user = productService.getUserById(userId);
+        String userEmail = user.getEmail();
+        String[] to = { userEmail }; // list of recipient email addresses
+        String subject = "Success order!";
 
-        // Get system properties
-        Properties properties = System.getProperties();
+        List<Order> orders = productService.getOrderByUserId(userId);
+        Order order = orders.get(0);
+        ShoppingCart shoppingCart = order.getShoppingCart();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dear ").append(user.getName()).append("!\n\nYour order is:\n\n");
+        int index = 1;
+        for (LineItem line: shoppingCart.getLineItems()) {
+            sb.append("Product " + index++ + ": \n");
+            sb.append("name: " + line.getProduct().getName() + "\n");
+            sb.append("price: " + line.getProduct().getPrice() + "\n");
+            sb.append("quantity: " + line.getQuantity() + "\n");
+            sb.append("\n");
+        }
+        sb.append("Total price: " + shoppingCart.getTotalPrice() + " USD");
+        String body = sb.toString();
 
 
-        // Setup mail server
-        properties.setProperty("mail.smtp.host", host);
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
 
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
-
-        // Set response content type
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+        Session session = Session.getInstance(props);
+        MimeMessage message = new MimeMessage(session);
 
         try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.length];
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            // To get the array of addresses
+            for( int i = 0; i < to.length; i++ ) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
 
-            // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
 
-            // Now set the actual message
-            message.setText("This is actual message");
-
-            // Send message
-            Transport.send(message);
-            String title = "Send Email";
-            String res = "Sent message successfully....";
-            String docType =
-                    "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-
-            out.println(docType +
-                    "<html>\n" +
-                    "<head><title>" + title + "</title></head>\n" +
-                    "<body bgcolor = \"#f0f0f0\">\n" +
-                    "<h1 align = \"center\">" + title + "</h1>\n" +
-                    "<p align = \"center\">" + res + "</p>\n" +
-                    "</body></html>"
-         );
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+            message.setSubject(subject);
+            message.setText(body);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
         }
+        catch (AddressException ae) {
+            ae.printStackTrace();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        engine.process("payment/success.html", context, response.getWriter());
+
     }
 }

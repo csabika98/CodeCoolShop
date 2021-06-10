@@ -1,10 +1,12 @@
 package com.codecool.shop.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
     private List<LineItem> lineItems = new ArrayList<>();
+    private float totalPrice;
 
     public ShoppingCart(Product product){
         addProduct(product);
@@ -17,7 +19,8 @@ public class ShoppingCart {
             LineItem lineItem = new LineItem(product);
             this.lineItems.add(lineItem);
         }
-
+        String[] str = product.getPrice().split(" ");
+        totalPrice += Float.parseFloat(str[0]);
     }
 
     public LineItem getLineItemByProduct(Product product){
@@ -32,6 +35,9 @@ public class ShoppingCart {
         return lineItems.get(0);
     }
 
+    public float getTotalPrice() {
+        return totalPrice;
+    }
 
     public void removeLineItem(LineItem lineItem){
         this.lineItems.remove(lineItem);
