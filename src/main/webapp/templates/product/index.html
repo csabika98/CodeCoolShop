@@ -89,7 +89,7 @@
     </div>
 </nav>
 <div class="container-fluid bg-own px-3 py-3">
-    <div class="shadow p-3 mb-5 bg-body rounded shopcard">
+    <div class="card shadow p-3 mb-5 bg-body rounded shopcard">
         <div class="py-3">
             <div class="text-center">
                 <strong th:if="${category}" th:text="${category.name}">Category Title</strong>
@@ -124,7 +124,7 @@
         <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
             <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
                 <div class="col" id="products" th:each="prod,iterStat : ${products}">
-                    <div class="card h-100 shadow-sm"><img class="" src="http://placehold.it/400x250/000/fff"
+                    <div class="card card-custom h-100 shadow-sm"><img class="" src="http://placehold.it/400x250/000/fff"
                                                            th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'"
                                                            alt=""/>
                         <div class="label-top shadow-sm" th:text="${prod.getSupplierName()}"></div>
