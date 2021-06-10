@@ -1,3 +1,4 @@
+let totalPrice = 0
 const initCart = {
     fetchData: function () {
         fetch('/api/cart')
@@ -19,11 +20,15 @@ const initCart = {
                 card.classList.add("card", "w-auto", "p-3")
                 card.append(product, quantity, price)
                 cart.append(card)
+                totalPrice += item.price
             }
+            const pr = document.createElement("div")
+            pr.textContent = "Total price: " + totalPrice.toFixed(2)
+            cart.append(pr)
         }
     },
     postData: function () {
-        const buttons = document.querySelectorAll('.btn')
+        const buttons = document.querySelectorAll('.buy-btn')
         buttons.forEach(function (currentBtn) {
             currentBtn.addEventListener('click', function () {
                 fetch("/addtocart", {
