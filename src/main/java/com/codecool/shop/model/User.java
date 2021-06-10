@@ -10,6 +10,8 @@ public class User {
     private String password;
     private BillingAddress billingAddress;
     private ShippingAddress shippingAddress;
+    private CreditCard creditCard;
+    private Paypal paypal;
 
     public User(String firstName, String lastName, String email, String phone, BillingAddress billingAddress, ShippingAddress shippingAddress) {
         this.firstName = firstName;
@@ -20,4 +22,11 @@ public class User {
         this.shippingAddress = shippingAddress;
     }
 
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public void setPaypal(Paypal paypal) {
+        this.paypal = paypal;
+    }
 }
