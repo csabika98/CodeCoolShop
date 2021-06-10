@@ -9,10 +9,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.BillingAddress;
-import com.codecool.shop.model.CreditCard;
-import com.codecool.shop.model.ShippingAddress;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.*;
 import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -24,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
@@ -44,16 +42,26 @@ public class PaymentController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, shoppingCartDao);
+
         HttpSession session = req.getSession();
         String userId = session.getId();
-        User user = productService.getUserById(userId);
 
+        User user = productService.getUserById(userId);
         user.setCreditCard(creditCard);
-        System.out.println(user.getCreditCard().getCardNumber());
+
+        ShoppingCart shoppingCart = productService.getShoppingCartByUserId(userId);
+        Order order = new Order(user, shoppingCart);
+        productService.addOrder(order);
+
+//        Test
+//        List<Order> userOrderList = productService.getOrderByUserId(userId);
+//        Order firstOrder = userOrderList.get(0);
+//        ShoppingCart sc = firstOrder.getShoppingCart();
+//        for (LineItem line : sc.getLineItems()) {
+//            System.out.println(line.getProduct().getName());
+//        }
+
         resp.sendRedirect(req.getContextPath() + "/success");
-//        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-//        WebContext context = new WebContext(req, resp, req.getServletContext());
-//        engine.process("payment/success.html", context, resp.getWriter());
 
     }
 }
