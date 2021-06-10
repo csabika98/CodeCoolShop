@@ -3,9 +3,12 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.implementation.UserDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.User;
 
 import java.util.List;
 
@@ -13,6 +16,7 @@ public class ProductService {
     private ProductDao productDao;
     private ProductCategoryDao productCategoryDao;
     private ShoppingCartDao shoppingCartDao;
+    private UserDao userDao = UserDaoMem.getInstance();
 
     public ProductService(){
     }
@@ -58,5 +62,13 @@ public class ProductService {
             shoppingCart = new ShoppingCart(product);
         }
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
+    }
+
+    public void addUser(User user) {
+        userDao.addUser(user);
+    }
+
+    public User getUserById(String userId) {
+        return userDao.getUser(userId);
     }
 }
