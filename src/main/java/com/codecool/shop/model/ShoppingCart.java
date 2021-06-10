@@ -12,7 +12,7 @@ public class ShoppingCart {
     public void addProduct(Product product) {
         if (getLineItemByProduct(product) != null){
             LineItem lineItem = getLineItemByProduct(product);
-            this.lineItems.add(lineItem);
+            lineItem.increaseQuantity(1);
         } else {
             LineItem lineItem = new LineItem(product);
             this.lineItems.add(lineItem);
@@ -21,7 +21,7 @@ public class ShoppingCart {
     }
 
     public LineItem getLineItemByProduct(Product product){
-        return lineItems.stream().filter(t -> t.getProduct() == product).findFirst().orElse(null);
+        return lineItems.stream().filter(t -> t.getProduct().getId() == product.getId()).findFirst().orElse(null);
     }
 
     public List<LineItem> getLineItems() {
