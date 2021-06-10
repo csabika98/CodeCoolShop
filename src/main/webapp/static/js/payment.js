@@ -6,11 +6,14 @@ const initPayment = {
         const credit = document.querySelector(".credit-card")
         paypalRadio.addEventListener("change", function ( event){
             if (paypalRadio.checked === true){
-                paypal.setAttribute("hidden", true);
-                credit.setAttribute("hidden", false);
-            } else {
-                paypal.setAttribute("hidden", false);
-                credit.setAttribute("hidden", true);
+                paypal.style.visibility="visible";
+                credit.style.visibility="hidden";
+            }
+        })
+        paypalRadio.addEventListener("change", function ( event){
+            if (creditRadio.checked === true){
+                paypal.style.visibility="hidden";
+                credit.style.visibility="visible";
             }
         })
 
