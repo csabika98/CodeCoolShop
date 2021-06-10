@@ -1,7 +1,7 @@
 package com.codecool.shop.model;
 
 public class User {
-    private int id;
+    private String id;
     private String firstName;
     private String lastName;
     private String userName;
@@ -13,7 +13,8 @@ public class User {
     private CreditCard creditCard;
     private Paypal paypal;
 
-    public User(String firstName, String lastName, String email, String phone, BillingAddress billingAddress, ShippingAddress shippingAddress) {
+    public User(String userId, String firstName, String lastName, String email, String phone, BillingAddress billingAddress, ShippingAddress shippingAddress) {
+        this.id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -26,7 +27,19 @@ public class User {
         this.creditCard = creditCard;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public Paypal getPaypal() {
+        return paypal;
+    }
+
     public void setPaypal(Paypal paypal) {
         this.paypal = paypal;
+    }
+
+    public String getId() {
+        return id;
     }
 }
