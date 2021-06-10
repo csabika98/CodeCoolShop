@@ -1,9 +1,18 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.BillingAddress;
 import com.codecool.shop.model.ShippingAddress;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -12,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
     // ORDER CHECKOUT
@@ -39,7 +49,15 @@ import java.io.IOException;
             int shipHouse = Integer.parseInt(req.getParameter("shipHouse"));
             BillingAddress newBilling = new BillingAddress(bilCountry, bilCity, bilZip, bilStreet, bilHouse);
             ShippingAddress newShipping = new ShippingAddress(shipCountry, shipCity, shipZip, shipStreet, shipHouse);
-            User newUser = new User(firstName, lastName, email, phone, newBilling, newShipping);
+            HttpSession session = req.getSession();
+            String userId = session.getId();
+            User newUser = new User(userId, firstName, lastName, email, phone, newBilling, newShipping);
+
+            ProductDao productDataStore = ProductDaoMem.getInstance();
+            ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+            ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
+            ProductService productService = new ProductService(productDataStore,productCategoryDataStore, shoppingCartDao);
+            productService.addUser(newUser);
 //            System.out.println(newUser.toString());
 
             resp.sendRedirect(req.getContextPath() + "/payment");
