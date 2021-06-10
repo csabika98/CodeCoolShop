@@ -10,6 +10,10 @@ public class ShoppingCart {
         addProduct(product);
     }
 
+    public ShoppingCart() {
+
+    }
+
     public void addProduct(Product product) {
         if (getLineItemByProduct(product) != null){
             LineItem lineItem = getLineItemByProduct(product);

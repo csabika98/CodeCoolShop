@@ -51,6 +51,7 @@ public class OrderController  extends HttpServlet{
             System.out.print(e.getValue());
             context.setVariable("mapedjson", e);
         }
+        ShoppingCart shoppingCart = new ShoppingCart();
         context.setVariable("mycart",myCart);
         engine.process("order/order.html", context, resp.getWriter());
     }
