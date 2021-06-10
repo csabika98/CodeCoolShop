@@ -32,12 +32,12 @@
     </div>
     <div class="container-fluid  px-5 py-5" style="width:600px;">
         <div class="card shadow ">
-            <div class="card-header text-center">
+            <div class="card-header text-center py-4">
                 <h4>Checkout Summery</h4>
             </div>
             <div class="card-body p-3 mb-5 bg-body rounded">
-                <form class="row g-3">
-                    <h5 class="card-title">Contact Details</h5>
+                <form class="row g-3" id="order-details" method="post" action="/checkout-cart">
+                    <h5 class="card-title py-2 text-center">Contact Details</h5>
                     <div class="col-12">
                         <input type="text" class="form-control" placeholder="First name" aria-label="First name">
                     </div>
@@ -52,7 +52,7 @@
                         <label for="inputPhone4" class="form-label">Phone</label>
                         <input type="tel" class="form-control" id="inputPhone4">
                     </div>
-                    <h5 class="card-title">Billing Address</h5>
+                    <h5 class="card-title py-2 text-center">Billing Address</h5>
                     <div class="col-md-12">
                         <label for="inputCountry" class="form-label">Country</label>
                         <input type="text" class="form-control" id="inputCountry">
@@ -73,7 +73,7 @@
                         <label for="inputHouseNumber" class="form-label">HouseNumber</label>
                         <input type="number" class="form-control" id="inputHouseNumber" placeholder="1234">
                     </div>
-                    <h5 class="card-title">Shipping Address</h5>
+                    <h5 class="card-title py-2 text-center">Shipping Address</h5>
                     <div class="col-md-12">
                         <label for="inputShippingCountry" class="form-label">Country</label>
                         <input type="text" class="form-control" id="inputShippingCountry">
@@ -94,7 +94,7 @@
                         <label for="inputShippingHouseNumber" class="form-label">HouseNumber</label>
                         <input type="number" class="form-control" id="inputShippingHouseNumber" placeholder="1234">
                     </div>
-                    <h5 class="card-title">Payment</h5>
+                    <h5 class="card-title py-2 text-center">Payment Method</h5>
                     <div class="my-3">
                         <div class="form-check">
                             <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
