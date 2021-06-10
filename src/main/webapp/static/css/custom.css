@@ -78,11 +78,18 @@
 .shopcard {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: lighter;
-    background-color: whitesmoke;
 }
-.shopping-items{
+
+.shopping-items {
     padding: 15px;
 }
-.navbar{
+
+.navbar {
     background: none;
+}
+.card-length{
+    z-index:1;
+    position:relative;
+    bottom: 15px;
+    left: 120px;
 }
