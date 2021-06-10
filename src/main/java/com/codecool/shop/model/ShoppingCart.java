@@ -1,5 +1,6 @@
 package com.codecool.shop.model;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,6 @@ public class ShoppingCart {
         addProduct(product);
     }
 
-    public ShoppingCart() {
-
-    }
 
     public void addProduct(Product product) {
         if (getLineItemByProduct(product) != null){
@@ -21,6 +19,17 @@ public class ShoppingCart {
         } else {
             LineItem lineItem = new LineItem(product);
             this.lineItems.add(lineItem);
+        }
+
+    }
+
+    public void removeProduct(Product product){
+        if(getLineItemByProduct(product) != null) {
+            LineItem lineItem = getLineItemByProduct(product);
+            lineItem.decreaseQuantity(1);
+        }else{
+            LineItem lineItem = new LineItem(product);
+            this.lineItems.remove(lineItem);
         }
 
     }

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,14 +46,10 @@ public class OrderController  extends HttpServlet{
         String myCart = new Gson().toJson(cart);
         JsonParser jp = new JsonParser();
         JsonElement element = jp.parse(myCart);
-        JsonObject root = element.getAsJsonObject();
-        for (Map.Entry<String, JsonElement> e : root.entrySet()) {
-            System.out.println(e.getKey());
-            System.out.print(e.getValue());
-            context.setVariable("mapedjson", e);
-        }
-        ShoppingCart shoppingCart = new ShoppingCart();
+        System.out.println("del");
+
+
         context.setVariable("mycart",myCart);
         engine.process("order/order.html", context, resp.getWriter());
     }
-}
+    }
