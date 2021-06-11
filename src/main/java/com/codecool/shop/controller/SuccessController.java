@@ -58,7 +58,7 @@ public class SuccessController  extends HttpServlet {
         ShoppingCart shoppingCart = order.getShoppingCart();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Dear ").append(user.getName()).append("!\n\nYour order is:\n\n");
+        sb.append("Dear ").append(user.getName()).append("!\n\nYour order is success!\n\n");
         int index = 1;
         for (LineItem line: shoppingCart.getLineItems()) {
             sb.append("Product " + index++ + ": \n");
