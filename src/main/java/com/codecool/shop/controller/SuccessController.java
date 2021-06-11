@@ -31,10 +31,6 @@ import java.util.Properties;
 @WebServlet(urlPatterns = {"/success"})
 public class SuccessController  extends HttpServlet {
 
-    static Properties mailServerProperties;
-    static Session getMailSession;
-    static MimeMessage generateMailMessage;
-
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String from = "cc.fourhorseman";
