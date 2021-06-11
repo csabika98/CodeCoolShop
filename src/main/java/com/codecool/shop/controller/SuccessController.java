@@ -47,6 +47,33 @@ public class SuccessController  extends HttpServlet {
         User user = productService.getUserById(userId);
         String userEmail = user.getEmail();
         String[] to = { userEmail }; // list of recipient email addresses
+//        String[] to = { userEmail,"robert.kohanyi@codecool.com",
+//                "anett.fejes@codecool.com",
+//                "imre.lindi@codecool.com",
+//                "turi.krisztina1999@gmail.com",
+//                "class.msc.2020",
+//                "ferenczi.gergo.87@gmail.com",
+//                "horvathbalazs9104@gmail.com",
+//                "ricsi.keri@gmail.com",
+//                "pelyheroland22@gmail.com",
+//                "vedres.david.adam@gmail.com",
+//                "kriszdemarco@gmail.com",
+//                "toth.geza.0425@gmail.com",
+//                "spiczmuller.richard@gmail.com",
+//                "halaszpeter9814@gmail.com",
+//                "rauszka94@gmail.com",
+//                "jozsefbabcsan1@gmail.com",
+//                "sallcsa.csaba8@gmail.com",
+//                "kalydybarnabas99@gmail.com",
+//                "papaimate166@gmail.com",
+//                "kbalazs93@gmail.com",
+//                "poool990224@gmail.com",
+//                "d.aldan12.ad@gmail.com",
+//                "fazekasdav@gmail.com",
+//                "attilaaa1313@gmail.com",
+//                "ptcadam@gmail.com",
+//                "beatrix.szabo.sc@gmail.com",
+//                "siposm17@gmail.com" };
         String subject = "Success order!";
 
         List<Order> orders = productService.getOrderByUserId(userId);
