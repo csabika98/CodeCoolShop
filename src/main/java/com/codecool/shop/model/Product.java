@@ -48,6 +48,9 @@ public class Product extends BaseModel {
     public ProductCategory getProductCategory() {
         return productCategory;
     }
+    public String getSupplierName(){
+        return supplier.name;
+    }
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
