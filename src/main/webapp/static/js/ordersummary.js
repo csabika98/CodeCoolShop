@@ -17,9 +17,17 @@ const initCart = {
                 let delbtn = document.createElement("button")
                 delbtn.setAttribute("type","button")
                 delbtn.addEventListener("click",function () {
-                    const cart = document.getElementById("myTable");
-                    initCart.delRow(delbtn)
-                    pr.textContent = "";
+                    fetch("/removefromcart", {
+                        method: "POST",
+                        credentials: "same-origin",
+                        body: this.dataset.id,
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        }
+                    }).then(initCart.fetchData)
+                    //const cart = document.getElementById("myTable");
+                    //initCart.delRow(delbtn)
+                    //pr.textContent = "";
                 })
                 col1.innerHTML = item.productName
                 col2.innerHTML = item.quantity
