@@ -74,4 +74,16 @@ public class ProductService {
     public List<Order> getOrderByUserId(String userId){
         return orderDao.getOrderByUserId(userId);
     }
+
+    public void removeProductFromCart(String userId, int productId){
+        Product product = getProductById(productId);
+        ShoppingCart shoppingCart;
+        if(shoppingCartDao.getAll().containsKey(userId)) {
+            shoppingCart = shoppingCartDao.find(userId);
+            shoppingCart.removeProduct(product);
+        }else{
+            shoppingCart = new ShoppingCart(product);
+        }
+        shoppingCartDao.addShoppingCart(userId, shoppingCart);
+    }
 }

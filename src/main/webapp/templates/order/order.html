@@ -22,7 +22,7 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
-    <script src="/static/js/main.js"></script>
+    <script src="/static/js/ordersummary.js"></script>
 </head>
 
 <body>
@@ -30,25 +30,10 @@
     <h1>Codecool Shop</h1>
     <div class="container">
         <h1>Order Summary</h1>
-        <table class="table table-stripped">
+        <table id="myTable" name="myTable" class="table table-borderless">
             <thead>
-            <tr>
-                <th scope="col">Product Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-            </tr>
             </thead>
             <tbody>
-            <!--<tr th:each="prod : ${##}"> // FOR EACH FOR THE ITEMS-->
-                <td>Product name</td>  <!--CREATE TH:TEXT for the items which has been added to the shopping cart--->
-                <td>Product quantity</td>
-                <td>Price</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Total price</td>
-                <td>Sum of all products</td>
-            </tr>
             </tbody>
         </table>
         <form th:action="@{/checkout}" th:method="GET">
