@@ -43,8 +43,8 @@ public class LineItem {
         linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }
 
-    public void decreaseQuantity(int number) {
-        quantity -= number;
+    public void decreaseQuantity() {
+        quantity -= 1;
         price = product.getDefaultPrice() * quantity;
         linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }

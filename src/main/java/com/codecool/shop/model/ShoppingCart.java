@@ -28,7 +28,7 @@ public class ShoppingCart {
     public void removeProduct(Product product) {
         if (getLineItemByProduct(product) != null) {
             LineItem lineItem = getLineItemByProduct(product);
-            lineItem.decreaseQuantity(1);
+            lineItem.decreaseQuantity();
         } else {
             LineItem lineItem = new LineItem(product);
             this.lineItems.remove(lineItem);

@@ -82,4 +82,17 @@ public class ProductService {
         shoppingCart.removeLineItem(productId);
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
+    public void decreaseProduct(String userId, int productId) {
+        Product product = getProductById(productId);
+        ShoppingCart shoppingCart;
+        shoppingCart = shoppingCartDao.find(userId);
+        LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
+        System.out.println(lineItem.getQuantity());
+        if(lineItem.getQuantity() == 1){
+            shoppingCart.removeLineItem(productId);
+        } else {
+            lineItem.decreaseQuantity();
+        }
+        shoppingCartDao.addShoppingCart(userId, shoppingCart);
+    }
 }
