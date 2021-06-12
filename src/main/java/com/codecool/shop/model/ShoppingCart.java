@@ -8,13 +8,13 @@ public class ShoppingCart {
     private List<LineItem> lineItems = new ArrayList<>();
     private float totalPrice;
 
-    public ShoppingCart(Product product){
+    public ShoppingCart(Product product) {
         addProduct(product);
     }
 
 
     public void addProduct(Product product) {
-        if (getLineItemByProduct(product) != null){
+        if (getLineItemByProduct(product) != null) {
             LineItem lineItem = getLineItemByProduct(product);
             lineItem.increaseQuantity(1);
         } else {
@@ -25,21 +25,30 @@ public class ShoppingCart {
         totalPrice += Float.parseFloat(str[0]);
     }
 
-    public void removeProduct(Product product){
-        if(getLineItemByProduct(product) != null) {
+    public void removeProduct(Product product) {
+        if (getLineItemByProduct(product) != null) {
             LineItem lineItem = getLineItemByProduct(product);
             lineItem.decreaseQuantity(1);
-        }else{
+        } else {
             LineItem lineItem = new LineItem(product);
             this.lineItems.remove(lineItem);
         }
 
     }
 
-    public LineItem getLineItemByProduct(Product product){
+    public void removeLineItem(int productId) {
+        LineItem lineItem = getLineItemByProductId(productId);
+        this.lineItems.remove(lineItem);
+
+    }
+
+    public LineItem getLineItemByProduct(Product product) {
         return lineItems.stream().filter(t -> t.getProduct().getId() == product.getId()).findFirst().orElse(null);
     }
 
+    public LineItem getLineItemByProductId(int productId) {
+        return lineItems.stream().filter(t -> t.getProduct().getId() == productId).findFirst().orElse(null);
+    }
     public List<LineItem> getLineItems() {
         return lineItems;
     }
@@ -52,7 +61,7 @@ public class ShoppingCart {
         return totalPrice;
     }
 
-    public void removeLineItem(LineItem lineItem){
+    public void removeLineItem(LineItem lineItem) {
         this.lineItems.remove(lineItem);
     }
 }

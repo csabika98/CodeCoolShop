@@ -6,6 +6,7 @@ public class LineItem {
     private String productPrice;
     private String linePrice;
     private transient Product product;
+    private int productId;
     private int quantity;
     private float price;
 
@@ -13,10 +14,11 @@ public class LineItem {
         this.productName = product.getName();
         this.supplier = product.getSupplierName();
         this.product = product;
+        this.productId = product.getId();
         this.productPrice = product.getPrice();
-        this.linePrice = String.format("%.02f", price);
         quantity = 1;
         price = product.getDefaultPrice() * quantity;
+        this.linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }
 
     public Product getProduct() {
@@ -38,10 +40,12 @@ public class LineItem {
     public void increaseQuantity(int number) {
         quantity += number;
         price = product.getDefaultPrice() * quantity;
+        linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }
 
     public void decreaseQuantity(int number) {
         quantity -= number;
         price = product.getDefaultPrice() * quantity;
+        linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }
 }
