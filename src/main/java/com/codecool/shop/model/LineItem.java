@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import java.util.Currency;
+
 public class LineItem {
     private String productName;
     private String supplier;
@@ -9,6 +11,7 @@ public class LineItem {
     private int productId;
     private int quantity;
     private float price;
+    private Currency currency;
 
     public LineItem(Product product){
         this.productName = product.getName();
@@ -18,7 +21,9 @@ public class LineItem {
         this.productPrice = product.getPrice();
         quantity = 1;
         price = product.getDefaultPrice() * quantity;
-        this.linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
+        this.currency = product.getDefaultCurrency();
+        this.linePrice = String.format("%.02f", price) + " " + currency.toString();
+
     }
 
     public Product getProduct() {
@@ -37,8 +42,8 @@ public class LineItem {
         return quantity;
     }
 
-    public void increaseQuantity(int number) {
-        quantity += number;
+    public void increaseQuantity() {
+        quantity += 1;
         price = product.getDefaultPrice() * quantity;
         linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
     }
@@ -47,5 +52,9 @@ public class LineItem {
         quantity -= 1;
         price = product.getDefaultPrice() * quantity;
         linePrice = String.format("%.02f", price) + " " + product.getDefaultCurrency().toString();
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }

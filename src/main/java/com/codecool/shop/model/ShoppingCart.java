@@ -2,42 +2,38 @@ package com.codecool.shop.model;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 public class ShoppingCart {
     private List<LineItem> lineItems = new ArrayList<>();
+    private Currency currency;
     private float totalPrice;
+    private String subTotal;
 
     public ShoppingCart(Product product) {
+        this.currency = product.getDefaultCurrency();
         addProduct(product);
-    }
 
+    }
 
     public void addProduct(Product product) {
+        LineItem lineItem;
         if (getLineItemByProduct(product) != null) {
-            LineItem lineItem = getLineItemByProduct(product);
-            lineItem.increaseQuantity(1);
+            lineItem = getLineItemByProduct(product);
+            lineItem.increaseQuantity();
         } else {
-            LineItem lineItem = new LineItem(product);
+            lineItem = new LineItem(product);
             this.lineItems.add(lineItem);
         }
-        String[] str = product.getPrice().split(" ");
-        totalPrice += Float.parseFloat(str[0]);
-    }
-
-    public void removeProduct(Product product) {
-        if (getLineItemByProduct(product) != null) {
-            LineItem lineItem = getLineItemByProduct(product);
-            lineItem.decreaseQuantity();
-        } else {
-            LineItem lineItem = new LineItem(product);
-            this.lineItems.remove(lineItem);
-        }
-
+        totalPrice += lineItem.getPrice();
+        this.subTotal = String.format("%.02f", totalPrice);
     }
 
     public void removeLineItem(int productId) {
         LineItem lineItem = getLineItemByProductId(productId);
+        totalPrice -= lineItem.getPrice();
+        this.subTotal = String.format("%.02f", totalPrice);
         this.lineItems.remove(lineItem);
 
     }
@@ -63,5 +59,9 @@ public class ShoppingCart {
 
     public void removeLineItem(LineItem lineItem) {
         this.lineItems.remove(lineItem);
+    }
+
+    public String getCurrency() {
+        return currency.toString();
     }
 }

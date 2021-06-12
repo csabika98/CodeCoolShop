@@ -18,13 +18,26 @@ const initOrder = {
                     <td>${item.supplier}</td>
                     <td>${item.productPrice}</td>
                     <td>${item.quantity}</td>
-                    <td class="text-start"><i class="fas fa-minus-circle me-2 productDecrease" data-productId="${item.productId}"></i><i class="fas fa-plus-circle productIncrase" data-productId="${item.productId}"></i></td>
-                    <td>${item.linePrice}</td>
+                    <td class="text-start"><i class="fas fa-minus-circle me-2 productDecrease" data-productId="${item.productId}"></i><i class="fas fa-plus-circle productIncrease" data-productId="${item.productId}"></i></td>
+                    <td class="text-end pe-3">${item.linePrice}</td>
                     <td><i class="fas fa-trash lineRemover" data-productId="${item.productId}"></i></td>
                 </tr>`
             tbody.insertAdjacentHTML("beforeend", outerHTML);
             index++;
         }
+        let outerHTML2 =
+            `<tr>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-start">SubTotal:</td>
+                    <td class="text-end pe-3">${data.subTotal + " " + data.currency}</td>
+                    <td></td>
+                </tr>`
+        tbody.insertAdjacentHTML("beforeend", outerHTML2);
+
         initOrder.addDecreaseListener()
         initOrder.addIncreaseListener()
         initOrder.addRemoveListener();
@@ -67,7 +80,7 @@ const initOrder = {
         for (let increase of increaser) {
             increase.addEventListener("click", function (event) {
                 let productId = event.target.getAttribute('data-productId');
-                fetch("/deletelineitem", {
+                fetch("/increaseproduct", {
                     method: "POST",
                     credentials: "same-origin",
                     body: productId,

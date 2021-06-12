@@ -83,16 +83,22 @@ public class ProductService {
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
     public void decreaseProduct(String userId, int productId) {
-        Product product = getProductById(productId);
         ShoppingCart shoppingCart;
         shoppingCart = shoppingCartDao.find(userId);
         LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
-        System.out.println(lineItem.getQuantity());
         if(lineItem.getQuantity() == 1){
             shoppingCart.removeLineItem(productId);
         } else {
             lineItem.decreaseQuantity();
         }
+        shoppingCartDao.addShoppingCart(userId, shoppingCart);
+    }
+    public void increaseProduct(String userId, int productId){
+        ShoppingCart shoppingCart;
+        shoppingCart = shoppingCartDao.find(userId);
+        LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
+        System.out.println(lineItem.getQuantity());
+        lineItem.increaseQuantity();
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
 }
