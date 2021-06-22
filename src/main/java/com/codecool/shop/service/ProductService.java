@@ -85,24 +85,15 @@ public class ProductService {
     public void decreaseProduct(String userId, int productId) {
         ShoppingCart shoppingCart;
         shoppingCart = shoppingCartDao.find(userId);
-        LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
-        if(lineItem.getQuantity() == 1){
-            shoppingCart.removeLineItem(productId);
-        } else {
-            lineItem.decreaseQuantity();
-        }
-
         //TODO create decrease method to ShoppingCart to modify subTotal
+        shoppingCart.decreaseLineItem(productId);
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
     public void increaseProduct(String userId, int productId){
         ShoppingCart shoppingCart;
         shoppingCart = shoppingCartDao.find(userId);
-        LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
-        System.out.println(lineItem.getQuantity());
-        lineItem.increaseQuantity();
-
         //TODO create increase method to ShoppingCart to modify subTotal
+        shoppingCart.increaseLineItem(productId);
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
 }

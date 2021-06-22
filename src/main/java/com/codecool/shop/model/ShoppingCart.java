@@ -26,7 +26,7 @@ public class ShoppingCart {
             lineItem = new LineItem(product);
             this.lineItems.add(lineItem);
         }
-        totalPrice += lineItem.getPrice();
+        totalPrice += lineItem.getProduct().getDefaultPrice();
         this.subTotal = String.format("%.02f", totalPrice);
     }
 
@@ -36,6 +36,23 @@ public class ShoppingCart {
         this.subTotal = String.format("%.02f", totalPrice);
         this.lineItems.remove(lineItem);
 
+    }
+    public void decreaseLineItem(int productId) {
+        LineItem lineItem = getLineItemByProductId(productId);
+        if(lineItem.getQuantity() == 1){
+            removeLineItem(productId);
+        } else {
+            totalPrice -= lineItem.getProduct().getDefaultPrice();
+            lineItem.decreaseQuantity();
+        }
+        System.out.println(lineItem.getPrice());
+        this.subTotal = String.format("%.02f", totalPrice);
+    }
+    public void increaseLineItem(int productId) {
+        LineItem lineItem = getLineItemByProductId(productId);
+        lineItem.increaseQuantity();
+        totalPrice += lineItem.getProduct().getDefaultPrice();
+        this.subTotal = String.format("%.02f", totalPrice);
     }
 
     public LineItem getLineItemByProduct(Product product) {

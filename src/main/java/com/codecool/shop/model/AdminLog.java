@@ -39,8 +39,9 @@ public class AdminLog {
         String json = String.format("{\"Time\": \"%s\",\"UserID\": \"%s\",\"Action\": \"%s\"}", currentTime,userdID,action);
         String prd = String.format("{\"Product Id\": \"%s\",{\"name\": \"%s\",\"defaultPrice\": \"%s\",\"Supplier\": \"%s\",\"Category\": \"%s\"}", object.getId(),object.getName(),object.getDefaultPrice(),object.getSupplier().getName(),object.getProductCategory().getName());
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        JsonObject jsonObject2 = new JsonParser().parse(prd).getAsJsonObject();
-        jsonObject.add("product",jsonObject2);
+//        JsonObject jsonObject2 = new JsonParser().parse(prd).getAsJsonObject();
+        Gson gson = new Gson();
+        jsonObject.add("product",new JsonParser().parse(gson.toJson(object)));
         System.out.println(jsonObject);
     }
 
