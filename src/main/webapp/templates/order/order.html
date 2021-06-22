@@ -55,9 +55,12 @@
                 </table>
             </div>
         </div>
-        <form th:action="@{/checkout}" th:method="GET">
-            <input type="submit" value="Checkout" class="btn btn-primary"/></form>
-        <a href="/" class="btn btn-warning">Back to main page</a>
+        <div class="d-flex justify-content-between">
+            <a href="/" class="btn btn-warning">Back to main page</a>
+            <form th:action="@{/checkout}" th:method="GET">
+                <input type="submit" value="Checkout" class="btn btn-primary"/>
+            </form>
+        </div>
     </div>
     <div th:replace="footer.html :: copy"></div>
 </body>
