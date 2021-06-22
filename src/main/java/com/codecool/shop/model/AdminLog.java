@@ -11,6 +11,7 @@ public class AdminLog {
     private static String action;
     private static SimpleDateFormat formatter;
     private static String currentTime;
+    private static String result = "";
 
 
     private static String getJSON(String userdID, String action){
@@ -27,16 +28,13 @@ public class AdminLog {
         return result;
     }
 
-    private static String getJSON(String userdID, Product object, String action){
+    private static String getJSON(String userdID, Object object, String action){
         formatter = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
         currentTime = formatter.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        String result = "";
         Gson gson = new Gson();
-        result += gson.toJson(currentTime);
-        result += gson.toJson(userdID);
-        result += gson.toJson(object);
+        result += gson.toJson(String.format("Time: %s UserID: %s Action: %s Data: %s",currentTime,userdID,action,object));
         System.out.println(result);
         return result;
     }
@@ -48,7 +46,7 @@ public class AdminLog {
 //        writeJSON();
     }
 
-    public static void saveToJSON(String userdID, Product object, String action){
+    public static void saveToJSON(String userdID, Object object, String action){
         getJSON(userdID, object, action);
 //        writeJSON();
     }
