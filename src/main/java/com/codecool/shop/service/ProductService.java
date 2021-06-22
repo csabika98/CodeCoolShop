@@ -91,6 +91,8 @@ public class ProductService {
         } else {
             lineItem.decreaseQuantity();
         }
+
+        //TODO create decrease method to ShoppingCart to modify subTotal
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
     public void increaseProduct(String userId, int productId){
@@ -99,6 +101,8 @@ public class ProductService {
         LineItem lineItem = shoppingCart.getLineItemByProductId(productId);
         System.out.println(lineItem.getQuantity());
         lineItem.increaseQuantity();
+
+        //TODO create increase method to ShoppingCart to modify subTotal
         shoppingCartDao.addShoppingCart(userId, shoppingCart);
     }
 }
