@@ -1,9 +1,10 @@
 package com.codecool.shop.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Supplier extends BaseModel {
+public class Supplier extends BaseModel implements Serializable {
     private List<Product> products;
 
     public Supplier(String name, String description) {

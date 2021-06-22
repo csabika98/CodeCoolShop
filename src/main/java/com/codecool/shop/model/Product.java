@@ -1,12 +1,14 @@
 package com.codecool.shop.model;
 
+import java.beans.Transient;
+import java.io.Serializable;
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Product extends BaseModel implements Serializable {
 
     private float defaultPrice;
-    private Currency defaultCurrency;
-    private ProductCategory productCategory;
+    private transient Currency  defaultCurrency;
+    private transient ProductCategory productCategory;
     private Supplier supplier;
 
 
