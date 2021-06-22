@@ -1,6 +1,9 @@
 package com.codecool.shop.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,15 +31,17 @@ public class AdminLog {
         return result;
     }
 
-    private static String getJSON(String userdID, Object object, String action){
+    private static void getJSON(String userdID, Product object, String action){
         formatter = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
         currentTime = formatter.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        Gson gson = new Gson();
-        result += gson.toJson(String.format("Time: %s UserID: %s Action: %s Data: %s",currentTime,userdID,action,object));
-        System.out.println(result);
-        return result;
+        String json = String.format("{\"Time\": \"%s\",\"UserID\": \"%s\",\"Action\": \"%s\"}", currentTime,userdID,action);
+        String prd = String.format("{\"Product Id\": \"%s\",{\"name\": \"%s\",\"defaultPrice\": \"%s\",\"Supplier\": \"%s\",\"Category\": \"%s\"}", object.getId(),object.getName(),object.getDefaultPrice(),object.getSupplier().getName(),object.getProductCategory().getName());
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        JsonObject jsonObject2 = new JsonParser().parse(prd).getAsJsonObject();
+        jsonObject.add("product",jsonObject2);
+        System.out.println(jsonObject);
     }
 
     private static void writeJSON(){}
@@ -46,7 +51,7 @@ public class AdminLog {
 //        writeJSON();
     }
 
-    public static void saveToJSON(String userdID, Object object, String action){
+    public static void saveToJSON(String userdID, Product object, String action){
         getJSON(userdID, object, action);
 //        writeJSON();
     }
