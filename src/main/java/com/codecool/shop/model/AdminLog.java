@@ -1,13 +1,12 @@
 package com.codecool.shop.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 public class AdminLog {
     private static String userdID;
@@ -15,11 +14,13 @@ public class AdminLog {
     private static String action;
     private static SimpleDateFormat formatter;
     private static String currentTime;
+    private static String currentTime2;
+    private static SimpleDateFormat formatter2;
     private static String result = "";
 
 
-    private static String getJSON(String userdID, String action){
-        formatter= new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
+    private static String getJSON(String userdID, String action) {
+        formatter = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
         currentTime = formatter.format(new Date());
         setUserdID(userdID);
         setAction(action);
@@ -32,51 +33,52 @@ public class AdminLog {
         return result;
     }
 
-    private static void getJSON(String userdID, Product object, String action){
-        formatter = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
+    private static void getJSON(String userdID, Product object, String action) throws Exception {
+        formatter = new SimpleDateFormat("[HH:mm:ss]");
+        formatter2 = new SimpleDateFormat("[dd-MM-yyyy]");
         currentTime = formatter.format(new Date());
+        currentTime2 = formatter2.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        String json = String.format("{\"Time\": \"%s\",\"UserID\": \"%s\",\"Action\": \"%s\"}", currentTime,userdID,action);
-        String prd = String.format("{\"Product Id\": \"%s\",{\"name\": \"%s\",\"defaultPrice\": \"%s\",\"Supplier\": \"%s\",\"Category\": \"%s\"}", object.getId(),object.getName(),object.getDefaultPrice(),object.getSupplier().getName(),object.getProductCategory().getName());
-        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-//        JsonObject jsonObject2 = new JsonParser().parse(prd).getAsJsonObject();
-        Gson gson = new Gson();
-        jsonObject.add("product",new JsonParser().parse(gson.toJson(object)));
-        gson.toJson(jsonObject, new FileWriter(filePath));
-        System.out.println(jsonObject);
+        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+
+        if (validateFile(filepath)) {
+            try (Writer writer = new FileWriter(filepath, true)) {
+                Gson gson2 = new GsonBuilder().create();
+                String json = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} " , action, object.getId(), currentTime);
+                JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+                gson2.toJson(jsonObject, writer);
+
+            } catch (IOException e) {
+                throw new IOException(e);
+            }
+        } else {
+            try (Writer writer = new FileWriter(filepath, false)) {
+                Gson gson = new Gson();
+                String json = String.format("{\"UserID\": \"%s\"}" , userdID);
+                JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+                String jsonAction = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} " , action, object.getId(), currentTime);
+                JsonObject jsonActionObject = new JsonParser().parse(jsonAction).getAsJsonObject();
+                gson.toJson(jsonObject, writer);
+                gson.toJson(jsonActionObject, writer);
+
+            } catch (IOException e) {
+                throw new IOException(e);
+            }
+        }
     }
 
-    private static void writeJSON(){}
-
-    public static void saveToJSON(String userdID, String action){
-        getJSON(userdID, action);
-//        writeJSON();
+    private static boolean validateFile(String filename) {
+        return new File(filename).exists();
     }
 
-    public static void saveToJSON(String userdID, Product object, String action){
+    public static void saveToJSON(String userdID, Product object, String action) throws Exception {
         getJSON(userdID, object, action);
-//        writeJSON();
-    }
-
-    public static String getUserdID() {
-        return userdID;
     }
 
     public static void setUserdID(String userdID) {
         AdminLog.userdID = userdID;
-    }
-
-    public static Object getObject() {
-        return object;
-    }
-
-    public static void setObject(Object object) {
-        AdminLog.object = object;
-    }
-
-    public static String getAction() {
-        return action;
     }
 
     public static void setAction(String action) {

@@ -50,7 +50,11 @@ public class AddToCart extends HttpServlet {
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore,shoppingCartDao);
         Product product = productService.getProductById(productId);
-        AdminLog.saveToJSON(userID,product, "Product add to cart");
+        try {
+            AdminLog.saveToJSON(userID,product, "Product add to cart");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         productService.addProductToCart(userID, productId);
     }
 
