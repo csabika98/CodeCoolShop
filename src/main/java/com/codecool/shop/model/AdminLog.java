@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,6 +43,7 @@ public class AdminLog {
 //        JsonObject jsonObject2 = new JsonParser().parse(prd).getAsJsonObject();
         Gson gson = new Gson();
         jsonObject.add("product",new JsonParser().parse(gson.toJson(object)));
+        gson.toJson(jsonObject, new FileWriter(filePath));
         System.out.println(jsonObject);
     }
 
