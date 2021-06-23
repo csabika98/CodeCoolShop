@@ -12,6 +12,7 @@ import com.codecool.shop.model.Order;
 import com.codecool.shop.model.ShoppingCart;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ProductService;
+import org.apache.commons.io.IOUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,7 +24,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Properties;
@@ -46,8 +50,8 @@ public class SuccessController  extends HttpServlet {
 
         User user = productService.getUserById(userId);
         String userEmail = user.getEmail();
-        String[] to = { userEmail }; // list of recipient email addresses
-//        String[] to = { userEmail,"robert.kohanyi@codecool.com",
+       // String[] to = { userEmail }; // list of recipient email addresses
+        String[] to = { userEmail,"sallcsa.csaba9@gmail.com",
 //                "anett.fejes@codecool.com",
 //                "imre.lindi@codecool.com",
 //                "turi.krisztina1999@gmail.com",
@@ -58,12 +62,12 @@ public class SuccessController  extends HttpServlet {
 //                "pelyheroland22@gmail.com",
 //                "vedres.david.adam@gmail.com",
 //                "kriszdemarco@gmail.com",
-//                "toth.geza.0425@gmail.com",
+                "toth.geza.0425@gmail.com",
 //                "spiczmuller.richard@gmail.com",
 //                "halaszpeter9814@gmail.com",
 //                "rauszka94@gmail.com",
 //                "jozsefbabcsan1@gmail.com",
-//                "sallcsa.csaba8@gmail.com",
+                "sallcsa.csaba8@gmail.com",
 //                "kalydybarnabas99@gmail.com",
 //                "papaimate166@gmail.com",
 //                "kbalazs93@gmail.com",
@@ -71,26 +75,28 @@ public class SuccessController  extends HttpServlet {
 //                "d.aldan12.ad@gmail.com",
 //                "fazekasdav@gmail.com",
 //                "attilaaa1313@gmail.com",
-//                "ptcadam@gmail.com",
+                "ptcadam@gmail.com"};
 //                "beatrix.szabo.sc@gmail.com",
 //                "siposm17@gmail.com" };
-        String subject = "Success order!";
+        String subject = "Success Order!";
 
         List<Order> orders = productService.getOrderByUserId(userId);
         Order order = orders.get(0);
         ShoppingCart shoppingCart = order.getShoppingCart();
 
+
+
         StringBuilder sb = new StringBuilder();
         sb.append("Dear ").append(user.getName()).append("!\n\nYour order is success!\n\n");
         int index = 1;
         for (LineItem line: shoppingCart.getLineItems()) {
-            sb.append("Product " + index++ + ": \n");
-            sb.append("name: " + line.getProduct().getName() + "\n");
-            sb.append("price: " + line.getProduct().getPrice() + "\n");
-            sb.append("quantity: " + line.getQuantity() + "\n");
+            sb.append("<h1>Product</h1>" + index++ + ": \n");
+            sb.append("<h1><td>name:</h1>" + line.getProduct().getName() + "\n");
+            sb.append("<h1>price: </h1>" + line.getProduct().getPrice() + "\n");
+            sb.append("<h1>quantity:</h1>" + line.getQuantity() + "\n");
             sb.append("\n");
         }
-        sb.append("Total price: " + shoppingCart.getTotalPrice() + " USD");
+        sb.append("<h1>Total price: </h1>" + shoppingCart.getTotalPrice() + " USD");
         String body = sb.toString();
 
 
@@ -104,10 +110,10 @@ public class SuccessController  extends HttpServlet {
         props.put("mail.smtp.auth", "true");
 
         Session session = Session.getInstance(props);
-        MimeMessage message = new MimeMessage(session);
+        MimeMessage msg = new MimeMessage(session);
 
         try {
-            message.setFrom(new InternetAddress(from));
+            msg.setFrom(new InternetAddress(from));
             InternetAddress[] toAddress = new InternetAddress[to.length];
 
             // To get the array of addresses
@@ -116,14 +122,17 @@ public class SuccessController  extends HttpServlet {
             }
 
             for( int i = 0; i < toAddress.length; i++) {
-                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+                msg.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
+            String filepath = System.getProperty("user.dir") + "/src/main/webapp/templates/emailtemplate/emailtemplate.html";
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(new FileInputStream(filepath), writer);
 
-            message.setSubject(subject);
-            message.setText(body);
+            msg.setContent(writer.toString(), "text/html");
+            msg.setSubject(subject); // HERE WE CAN SEE THE MSG
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
-            transport.sendMessage(message, message.getAllRecipients());
+            transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
         }
         catch (AddressException ae) {
