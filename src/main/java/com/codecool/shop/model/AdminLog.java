@@ -18,7 +18,6 @@ public class AdminLog {
     private static SimpleDateFormat formatter2;
     private static String result = "";
 
-
     private static String getJSON(String userdID, String action) {
         formatter = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss]");
         currentTime = formatter.format(new Date());
@@ -110,9 +109,32 @@ public class AdminLog {
             throw new IOException(e);
         }
     }
+    private static void getJSON(String userdID, Order order) throws Exception {
+        formatter = new SimpleDateFormat("[HH:mm:ss]");
+        formatter2 = new SimpleDateFormat("[dd-MM-yyyy]");
+        currentTime = formatter.format(new Date());
+        currentTime2 = formatter2.format(new Date());
+        setUserdID(userdID);
+        String filepath = System.getProperty("user.dir") + String.format("/Orders/%s-%s.json", userdID, currentTime2);
+
+        try (Writer writer = new FileWriter(filepath, false)) {
+            Gson gson = new Gson();
+            String json = String.format("{\"UserID\": \"%s\"}", userdID);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("Order", new JsonParser().parse(gson.toJson(order)));
+            gson.toJson(jsonObject, writer);
+
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+    }
 
     private static boolean validateFile(String filename) {
         return new File(filename).exists();
+    }
+
+    public static void saveToJSON(String userdID, Order order) throws Exception {
+        getJSON(userdID, order);
     }
 
     public static void saveToJSON(String userdID, Product object, String action) throws Exception {

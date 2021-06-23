@@ -56,6 +56,7 @@ public class PaymentController extends HttpServlet {
 
         try {
             AdminLog.saveToJSON(userId, card, "Check address");
+            AdminLog.saveToJSON(userId, order);
         } catch (Exception e) {
             e.printStackTrace();
         }
