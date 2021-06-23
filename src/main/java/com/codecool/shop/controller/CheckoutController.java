@@ -9,9 +9,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.BillingAddress;
-import com.codecool.shop.model.ShippingAddress;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.*;
 import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -59,6 +57,11 @@ import java.io.IOException;
             ProductService productService = new ProductService(productDataStore,productCategoryDataStore, shoppingCartDao);
             productService.addUser(newUser);
 //            System.out.println(newUser.toString());
+            try {
+                AdminLog.saveToJSON(userId, newBilling, newShipping, "Check address");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             resp.sendRedirect(req.getContextPath() + "/payment");
 

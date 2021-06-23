@@ -6,6 +6,8 @@ import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
+import com.codecool.shop.model.AdminLog;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
 
@@ -39,6 +41,12 @@ public class DeleteLineItem extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore,shoppingCartDao);
+        Product product = productService.getProductById(productId);
+        try {
+            AdminLog.saveToJSON(userID,product, "Delete product");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         productService.removeProductFromCart(userID, productId);
     }
 

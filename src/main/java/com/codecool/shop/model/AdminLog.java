@@ -45,7 +45,7 @@ public class AdminLog {
         if (validateFile(filepath)) {
             try (Writer writer = new FileWriter(filepath, true)) {
                 Gson gson2 = new GsonBuilder().create();
-                String json = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} " , action, object.getId(), currentTime);
+                String json = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} ", action, object.getId(), currentTime);
                 JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
                 gson2.toJson(jsonObject, writer);
 
@@ -55,10 +55,10 @@ public class AdminLog {
         } else {
             try (Writer writer = new FileWriter(filepath, false)) {
                 Gson gson = new Gson();
-                String json = String.format("{\"UserID\": \"%s\"}" , userdID);
+                String json = String.format("{\"UserID\": \"%s\"}", userdID);
                 JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
 
-                String jsonAction = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} " , action, object.getId(), currentTime);
+                String jsonAction = String.format("{\"Action\": \"%s\" ,\"Product Id\": \"%s\", \"time\": \"%s\"} ", action, object.getId(), currentTime);
                 JsonObject jsonActionObject = new JsonParser().parse(jsonAction).getAsJsonObject();
                 gson.toJson(jsonObject, writer);
                 gson.toJson(jsonActionObject, writer);
@@ -69,12 +69,61 @@ public class AdminLog {
         }
     }
 
+    private static void getJSON(String userdID, BillingAddress bA,ShippingAddress sA, String action) throws Exception {
+        formatter = new SimpleDateFormat("[HH:mm:ss]");
+        formatter2 = new SimpleDateFormat("[dd-MM-yyyy]");
+        currentTime = formatter.format(new Date());
+        currentTime2 = formatter2.format(new Date());
+        setUserdID(userdID);
+        setAction(action);
+        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+
+        try (Writer writer = new FileWriter(filepath, true)) {
+            Gson gson2 = new GsonBuilder().create();
+            String json = String.format("{\"Action\": \"%s\" ,\"time\": \"%s\"} ", action, currentTime);
+            JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+            jsonObject.add("Billing Address", new JsonParser().parse(gson2.toJson(bA)));
+            jsonObject.add("Shipping Address", new JsonParser().parse(gson2.toJson(sA)));
+            gson2.toJson(jsonObject, writer);
+
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+    }
+    private static void getJSON(String userdID, CreditCard cC, String action) throws Exception {
+        formatter = new SimpleDateFormat("[HH:mm:ss]");
+        formatter2 = new SimpleDateFormat("[dd-MM-yyyy]");
+        currentTime = formatter.format(new Date());
+        currentTime2 = formatter2.format(new Date());
+        setUserdID(userdID);
+        setAction(action);
+        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+
+        try (Writer writer = new FileWriter(filepath, true)) {
+            Gson gson2 = new GsonBuilder().create();
+            String json = String.format("{\"Action\": \"%s\" ,\"time\": \"%s\"} ", action, currentTime);
+            JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+            jsonObject.add("Credit Card", new JsonParser().parse(gson2.toJson(cC)));
+            gson2.toJson(jsonObject, writer);
+
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+    }
+
     private static boolean validateFile(String filename) {
         return new File(filename).exists();
     }
 
     public static void saveToJSON(String userdID, Product object, String action) throws Exception {
         getJSON(userdID, object, action);
+    }
+
+    public static void saveToJSON(String userdID, BillingAddress bA,ShippingAddress sA, String action) throws Exception {
+        getJSON(userdID, bA, sA, action);
+    }
+    public static void saveToJSON(String userdID, CreditCard cC, String action) throws Exception {
+        getJSON(userdID, cC, action);
     }
 
     public static void setUserdID(String userdID) {

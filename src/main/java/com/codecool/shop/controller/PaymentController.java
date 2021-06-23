@@ -48,18 +48,17 @@ public class PaymentController extends HttpServlet {
 
         User user = productService.getUserById(userId);
         user.setCreditCard(creditCard);
+        CreditCard card = user.getCreditCard();
 
         ShoppingCart shoppingCart = productService.getShoppingCartByUserId(userId);
         Order order = new Order(user, shoppingCart);
         productService.addOrder(order);
 
-//        Test
-//        List<Order> userOrderList = productService.getOrderByUserId(userId);
-//        Order firstOrder = userOrderList.get(0);
-//        ShoppingCart sc = firstOrder.getShoppingCart();
-//        for (LineItem line : sc.getLineItems()) {
-//            System.out.println(line.getProduct().getName());
-//        }
+        try {
+            AdminLog.saveToJSON(userId, card, "Check address");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         resp.sendRedirect(req.getContextPath() + "/success");
 
