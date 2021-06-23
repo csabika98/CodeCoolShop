@@ -1,5 +1,10 @@
 package com.codecool.shop.config;
 
+import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.User;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
 import java.nio.charset.StandardCharsets;
 
 public class Util {
@@ -9,5 +14,15 @@ public class Util {
         byte[] hunglishBytes = hunglishString.getBytes();
         String asciiString = new String(hunglishBytes, StandardCharsets.ISO_8859_1);
         return asciiString;
+    }
+    public String generateMailContent(ShoppingCart shoppingCart, User user, TemplateEngine templateEngine) {
+        Context context = new Context();
+        String filePath = "/emailtemplate/user.html";
+        context.setVariable("LineItemsList", shoppingCart.getLineItems());
+        context.setVariable("User", user);
+        context.setVariable("ShippingAddress", user.getShippingAddress());
+        context.setVariable("BillingAddress", user.getBillingAddress());
+        return templateEngine.process(filePath, context);
+
     }
 }

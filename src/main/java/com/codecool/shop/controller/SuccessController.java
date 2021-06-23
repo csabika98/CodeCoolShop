@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.config.Util;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
@@ -14,6 +15,7 @@ import com.codecool.shop.model.User;
 import com.codecool.shop.service.ProductService;
 import org.apache.commons.io.IOUtils;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
 
 import javax.mail.*;
@@ -40,6 +42,9 @@ public class SuccessController  extends HttpServlet {
         String from = "cc.fourhorseman";
         String pass = "Qawsed01";
 
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
@@ -49,6 +54,7 @@ public class SuccessController  extends HttpServlet {
         String userId = userSession.getId();
 
         User user = productService.getUserById(userId);
+
         String userEmail = user.getEmail();
        // String[] to = { userEmail }; // list of recipient email addresses
         String[] to = { userEmail,"sallcsa.csaba9@gmail.com",
@@ -124,11 +130,15 @@ public class SuccessController  extends HttpServlet {
             for( int i = 0; i < toAddress.length; i++) {
                 msg.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
-            String filepath = System.getProperty("user.dir") + "/src/main/webapp/templates/emailtemplate/emailtemplate.html";
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(new FileInputStream(filepath), writer);
 
-            msg.setContent(writer.toString(), "text/html");
+//            String filepath = System.getProperty("user.dir") + "/src/main/webapp/templates/emailtemplate/emailtemplate.html";
+
+//            StringWriter writer = new StringWriter();
+//            IOUtils.copy(new FileInputStream(filepath), writer);
+            Util util = new Util();
+            String email = util.generateMailContent(shoppingCart, user, engine);
+
+            msg.setContent(email, "text/html");
             msg.setSubject(subject); // HERE WE CAN SEE THE MSG
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
@@ -141,9 +151,9 @@ public class SuccessController  extends HttpServlet {
         catch (MessagingException me) {
             me.printStackTrace();
         }
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
+
         engine.process("payment/success.html", context, response.getWriter());
+
 
     }
 }

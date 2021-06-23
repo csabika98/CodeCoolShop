@@ -46,6 +46,15 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public BillingAddress getBillingAddress() {
+        return billingAddress;
+    }
+
+    public ShippingAddress getShippingAddress() {
+        return shippingAddress;
+    }
+
     public String getName(){
         return firstName + " " + lastName;
     }
