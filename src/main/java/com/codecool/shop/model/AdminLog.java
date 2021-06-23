@@ -40,7 +40,7 @@ public class AdminLog {
         currentTime2 = formatter2.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+        String filepath = System.getProperty("user.dir") + String.format("/AdminLog/%s-%s.json", userdID, currentTime2);
 
         if (validateFile(filepath)) {
             try (Writer writer = new FileWriter(filepath, true)) {
@@ -76,7 +76,7 @@ public class AdminLog {
         currentTime2 = formatter2.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+        String filepath = System.getProperty("user.dir") + String.format("/AdminLog/%s-%s.json", userdID, currentTime2);
 
         try (Writer writer = new FileWriter(filepath, true)) {
             Gson gson2 = new GsonBuilder().create();
@@ -97,7 +97,7 @@ public class AdminLog {
         currentTime2 = formatter2.format(new Date());
         setUserdID(userdID);
         setAction(action);
-        String filepath = System.getProperty("user.dir") + String.format("/%s-%s.json", userdID, currentTime2);
+        String filepath = System.getProperty("user.dir") + String.format("/AdminLog/%s-%s.json", userdID, currentTime2);
 
         try (Writer writer = new FileWriter(filepath, true)) {
             Gson gson2 = new GsonBuilder().create();
