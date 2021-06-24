@@ -17,7 +17,8 @@ public class Util {
     }
     public String generateMailContent(ShoppingCart shoppingCart, User user, TemplateEngine templateEngine) {
         Context context = new Context();
-        String filePath = "/emailtemplate/user.html";
+        String filePath = "/emailtemplate/emailtemplate.html";
+        //test//
         context.setVariable("LineItemsList", shoppingCart.getLineItems());
         context.setVariable("User", user);
         context.setVariable("ShippingAddress", user.getShippingAddress());
