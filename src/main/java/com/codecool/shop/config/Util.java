@@ -20,6 +20,7 @@ public class Util {
         String filePath = "/emailtemplate/emailtemplate.html";
         //test//
         context.setVariable("LineItemsList", shoppingCart.getLineItems());
+        context.setVariable("totalPrice", shoppingCart.getSubTotal());
         context.setVariable("User", user);
         context.setVariable("ShippingAddress", user.getShippingAddress());
         context.setVariable("BillingAddress", user.getBillingAddress());

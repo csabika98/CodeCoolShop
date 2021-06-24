@@ -57,4 +57,8 @@ public class LineItem {
     public Currency getCurrency() {
         return currency;
     }
+
+    public String getLinePrice() {
+        return linePrice;
+    }
 }

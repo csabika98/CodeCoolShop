@@ -81,4 +81,8 @@ public class ShoppingCart {
     public String getCurrency() {
         return currency.toString();
     }
+
+    public String getSubTotal() {
+        return subTotal;
+    }
 }
