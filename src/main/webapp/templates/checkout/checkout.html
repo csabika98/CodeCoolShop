@@ -83,8 +83,29 @@
                         <input type="number" class="form-control" name="shipHouse" id="inputShippingHouseNumber" placeholder="House number" aria-label="House number">
                     </div>
                     <div class="col-12 text-center pt-5">
+                            <!--SHIPPINGMETHOD-->
+                            <!--YOUCANCHOSESHIPPINGMETHODHERE-->
+                        <h5 class="card-title py-2 text-center">Shipping Method</h5>
+
+                            <div class="form-check">
+                                <input id="post" name="shippingmethod" type="radio" class="form-check-input"
+                                       required>
+                            <label class="form-check-label" for="post">Hungarian Post</label>
+                            </div>
+                        <div class="form-check">
+                            <input id="fedex" name="shippingmethod" type="radio" class="form-check-input"
+                                   required>
+                            <label class="form-check-label" for="post">Fedex</label>
+                                </div>
+                        <div class="form-check">
+                            <input id="gls" name="shippingmethod" type="radio" class="form-check-input"
+                                   required>
+                                <label class="form-check-label" for="gls">GLS</label>
+                            </div>
+
+
                         <button type="submit" class="btn btn-primary">Go Payment</button>
-                    </div>
+                </div>
                 </form>
             </div>
         </div>
