@@ -91,21 +91,6 @@ public class SuccessController  extends HttpServlet {
         ShoppingCart shoppingCart = order.getShoppingCart();
 
 
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Dear ").append(user.getName()).append("!\n\nYour order is success!\n\n");
-        int index = 1;
-        for (LineItem line: shoppingCart.getLineItems()) {
-            sb.append("<h1>Product</h1>" + index++ + ": \n");
-            sb.append("<h1><td>name:</h1>" + line.getProduct().getName() + "\n");
-            sb.append("<h1>price: </h1>" + line.getProduct().getPrice() + "\n");
-            sb.append("<h1>quantity:</h1>" + line.getQuantity() + "\n");
-            sb.append("\n");
-        }
-        sb.append("<h1>Total price: </h1>" + shoppingCart.getTotalPrice() + " USD");
-        String body = sb.toString();
-
-
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
