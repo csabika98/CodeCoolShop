@@ -1,20 +1,36 @@
-# CodeCoolShop
-<h1>Introductions</h1>
-E-Commerce website where you can buy products.
-<h1><br>Key feature:</br></h1>
-AdminLog
-<br>You can add product to your shopping cart.</br>
-You can add your own contact details and finalize the order.
-<br>Admin account, admin log
-<br>login and user system
-<h1><br>Pictures:</br></h1>
+# 🛒 CodeCoolShop
 
+---
 
-![alt text](https://i.imgur.com/rQicJJZ.png)
-![alt text](https://i.imgur.com/01JtSWC.png)
-![alt text](https://i.imgur.com/SyRm0zc.png)
-![alt text](https://i.imgur.com/Y2j4NSG.png)
+## 📖 Introduction
 
-<h1>Used Technologies</h1>
-<br>Backend: Java Servlet + Jetty Web server + Thymeleaf Template Engine</br>
-Frontend: HTML5 / JavaScript</br>
+**CodeCoolShop** is an e-commerce website where you can browse and purchase products with ease.
+
+---
+
+## 🔑 Key Features
+
+- **Shopping Cart**: Add products to your shopping cart effortlessly.
+- **Checkout Process**: Enter your contact details and finalize your order.
+- **Admin Account**: Manage the store with an admin account, including access to admin logs.
+- **User System**: Secure login and user management system.
+
+---
+
+## 🖼️ Screenshots
+
+Take a look at some visuals from the CodeCoolShop interface:
+
+<p align="center">
+  <img src="https://i.imgur.com/rQicJJZ.png" alt="CodeCoolShop Screenshot 1" width="600">
+  <img src="https://i.imgur.com/01JtSWC.png" alt="CodeCoolShop Screenshot 2" width="600">
+  <img src="https://i.imgur.com/SyRm0zc.png" alt="CodeCoolShop Screenshot 3" width="600">
+  <img src="https://i.imgur.com/Y2j4NSG.png" alt="CodeCoolShop Screenshot 4" width="600">
+</p>
+
+---
+
+## 🛠️ Used Technologies
+
+- **Backend**: Java Servlet, Jetty Web Server, Thymeleaf Template Engine
+- **Frontend**: HTML5, JavaScript
